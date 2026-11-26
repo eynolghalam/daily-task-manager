@@ -19,6 +19,11 @@
     "appId": "ir.codex.dailytaskmanager",
     "productName": "مدیریت کارهای روزانه",
     "win": { "target": "nsis" },
-    "publish": [{ "provider": "github", "owner": "eynolghalam", "repo": "daily-task-manager" }]
+    "publish": [{
+      "provider": "github",
+      "owner": "eynolghalam",
+      "repo": "daily-task-manager",
+      "releaseType": "release"
+    }]
   }
 }
