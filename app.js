@@ -84,11 +84,13 @@ document.querySelector("#next-month").addEventListener("click", () => moveCalend
 document.querySelector("#clear-date").addEventListener("click", () => {
   activeDateInput.value = "";
   activeDateButton.textContent = "▦";
+  activeDateButton.title = "انتخاب موعد";
   calendarDialog.close();
 });
 document.querySelector("#edit-clear-date").addEventListener("click", () => {
   editDate.value = "";
   editDateButton.textContent = "▦";
+  editDateButton.title = "انتخاب موعد";
 });
 document.querySelector("#close-edit").addEventListener("click", () => editDialog.close());
 editForm.addEventListener("submit", (event) => {
@@ -369,7 +371,8 @@ function renderCalendar() {
     if (activeDateInput.value === isoDate) button.classList.add("selected");
     button.addEventListener("click", () => {
       activeDateInput.value = isoDate;
-      activeDateButton.textContent = formatTaskDate(isoDate);
+      activeDateButton.textContent = "▦";
+      activeDateButton.title = formatTaskDate(isoDate);
       calendarDialog.close();
     });
     calendarGrid.append(button);
