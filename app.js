@@ -81,6 +81,10 @@ function showCalendarFor(inputField, triggerButton) {
 document.querySelector("#close-calendar").addEventListener("click", () => calendarDialog.close());
 document.querySelector("#previous-month").addEventListener("click", () => moveCalendarMonth(-1));
 document.querySelector("#next-month").addEventListener("click", () => moveCalendarMonth(1));
+document.querySelector("#today-button").addEventListener("click", () => {
+  calendarCursor = new Date();
+  renderCalendar();
+});
 document.querySelector("#clear-date").addEventListener("click", () => {
   activeDateInput.value = "";
   activeDateButton.textContent = "▦";

@@ -36,7 +36,8 @@ button:disabled { cursor: wait; opacity: .55; }
 .update-tool:hover { transform: rotate(28deg); }
 .app-version { align-self: center; margin-inline-start: -3px; color: #a6afc7; font-size: .72rem; direction: ltr; }
 .close-app:hover { color: #fff; border-color: rgba(255,130,150,.45); background: rgba(255,130,150,.19); }
-.hero { margin-bottom: 24px; }
+.hero { margin-bottom: 24px; -webkit-app-region: drag; }
+.window-tools, .window-tools button, .app-dialog, .app-dialog button, input, select { -webkit-app-region: no-drag; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid rgba(131,241,208,.17); border-radius: 999px; background: rgba(131,241,208,.07); color: var(--mint); font-size: .78rem; font-weight: 600; }
 .eyebrow::before { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px var(--mint); content: ""; }
 h1 { margin: 12px 0 5px; font-size: clamp(2rem,7vw,2.8rem); line-height: 1.25; font-weight: 800; letter-spacing: -.04em; background: linear-gradient(100deg,#fff 10%,#d5dcff 60%,#a9f5e1); background-clip: text; -webkit-text-fill-color: transparent; }
@@ -111,6 +112,7 @@ footer { padding: 14px 4px; color: #7e89a3; text-align: center; font-size: .78re
 .save-edit { width: 100%; margin-top: 16px; }
 .calendar-month { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 .calendar-month button { display: grid; width: 36px; height: 34px; place-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--glass); color: var(--mint); font-size: 1.15rem; }
+.calendar-month .today-button { width: auto; padding: 0 11px; color: var(--mint); font-size: .8rem; }
 .calendar-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 5px; text-align: center; }
 .calendar-grid button { min-height: 38px; border: 1px solid transparent; border-radius: 10px; background: rgba(255,255,255,.045); color: #e5eaff; transition: .18s ease; }
 .calendar-grid button:hover { transform: translateY(-1px); background: rgba(131,241,208,.15); }
