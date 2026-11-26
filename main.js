@@ -29,6 +29,39 @@ app.whenReady().then(() => {
   ipcMain.on("widget:close", (event) => {
     BrowserWindow.fromWebContents(event.sender)?.close();
   });
+  ipcMain.handle("updates:check", async () => {
+    if (!app.isPackaged) return { state: "development" };
+    try {
+      await autoUpdater.checkForUpdates();
+      return { state: "checking" };
+    } catch (error) {
+      return { state: "error", message: error.message };
+    }
+  });
+  ipcMain.on("updates:install", () => autoUpdater.quitAndInstall());
+
+  for (const [eventName, state] of [
+    ["checking-for-update", "checking"],
+    ["update-available", "available"],
+    ["update-not-available", "current"],
+    ["update-downloaded", "downloaded"]
+  ]) {
+    autoUpdater.on(eventName, () => {
+      for (const widget of BrowserWindow.getAllWindows()) {
+        widget.webContents.send("updates:status", { state });
+      }
+    });
+  }
+  autoUpdater.on("download-progress", (progress) => {
+    for (const widget of BrowserWindow.getAllWindows()) {
+      widget.webContents.send("updates:status", { state: "downloading", percent: Math.floor(progress.percent) });
+    }
+  });
+  autoUpdater.on("error", (error) => {
+    for (const widget of BrowserWindow.getAllWindows()) {
+      widget.webContents.send("updates:status", { state: "error", message: error.message });
+    }
+  });
   createWidget();
   // Check GitHub Releases for a newer published version when installed.
   if (app.isPackaged) autoUpdater.checkForUpdatesAndNotify();

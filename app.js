@@ -12,6 +12,33 @@ document.querySelector("#close-app").addEventListener("click", () => {
   window.widgetControls.close();
 });
 
+const checkUpdatesButton = document.querySelector("#check-updates");
+const applyUpdateButton = document.querySelector("#apply-update");
+const updateStatus = document.querySelector("#update-status");
+
+checkUpdatesButton.addEventListener("click", async () => {
+  checkUpdatesButton.disabled = true;
+  updateStatus.textContent = "در حال بررسی نسخه‌های جدید…";
+  const result = await window.widgetControls.checkForUpdates();
+  if (result.state === "development") updateStatus.textContent = "بررسی آپدیت در نسخهٔ نصب‌شده فعال است.";
+  else if (result.state === "error") updateStatus.textContent = "بررسی ناموفق بود. اتصال اینترنت را بررسی کن.";
+});
+
+applyUpdateButton.addEventListener("click", () => window.widgetControls.installUpdate());
+
+window.widgetControls.onUpdateStatus(({ state, percent }) => {
+  if (state === "checking") updateStatus.textContent = "در حال بررسی نسخه‌های جدید…";
+  if (state === "available") updateStatus.textContent = "نسخهٔ جدید پیدا شد؛ در حال دریافت…";
+  if (state === "downloading") updateStatus.textContent = `در حال دریافت به‌روزرسانی: ${toPersianDigits(percent)}٪`;
+  if (state === "current") updateStatus.textContent = "برنامه به‌روز است.";
+  if (state === "downloaded") {
+    updateStatus.textContent = "به‌روزرسانی آمادهٔ نصب است.";
+    applyUpdateButton.hidden = false;
+  }
+  if (state === "error") updateStatus.textContent = "بررسی یا دریافت به‌روزرسانی ناموفق بود.";
+  checkUpdatesButton.disabled = false;
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = input.value.trim();

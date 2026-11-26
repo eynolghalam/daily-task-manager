@@ -20,6 +20,13 @@ button { border: 0; font: inherit; cursor: pointer; }
 .list-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
 h2 { margin: 0; font-size: 1.1rem; }
 .count { color: #758174; font-size: .9rem; }
+.update-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin-top: 12px; }
+.update-button { padding: 8px 12px; border-radius: 9px; color: #328267; background: #edf7f2; font-size: .88rem; font-weight: 600; }
+.update-button:hover { background: #dff0e8; }
+.update-button:disabled { opacity: .6; cursor: wait; }
+.apply-update { color: #fff; background: #328267; }
+.apply-update:hover { color: #fff; background: #286e57; }
+.update-status { color: #758174; font-size: .84rem; }
 .task-list { display: grid; gap: 9px; padding: 0; margin: 14px 0 0; list-style: none; }
 .task-item { display: flex; align-items: center; gap: 12px; padding: 13px 14px; background: #f8faf9; border: 1px solid #edf1ee; border-radius: 12px; }
 .task-item input { width: 19px; height: 19px; accent-color: #328267; cursor: pointer; }
