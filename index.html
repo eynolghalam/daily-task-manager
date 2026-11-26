@@ -60,6 +60,17 @@
   <dialog id="settings-dialog" class="app-dialog">
     <form method="dialog" class="dialog-heading"><h2>تنظیمات</h2><button class="dialog-close" aria-label="بستن"><span class="material-icon">close</span></button></form>
     <label class="setting-row"><input id="persian-calendar-setting" type="checkbox" checked> نمایش تاریخ موعدها به‌صورت شمسی</label>
+    <h3>اندازهٔ نمایش</h3>
+    <label class="setting-row preference-row" for="font-size-setting">اندازهٔ نوشته‌ها
+      <select id="font-size-setting"><option value="xsmall">خیلی کوچک</option><option value="small">کوچک</option><option value="medium" selected>متوسط</option><option value="large">بزرگ</option></select>
+    </label>
+    <label class="setting-row preference-row" for="icon-size-setting">اندازهٔ آیکن‌ها
+      <select id="icon-size-setting"><option value="xsmall">خیلی کوچک</option><option value="small">کوچک</option><option value="medium" selected>متوسط</option><option value="large">بزرگ</option></select>
+    </label>
+    <h3>رنگ‌بندی</h3>
+    <label class="setting-row preference-row" for="theme-setting">تم برنامه
+      <select id="theme-setting"><option value="midnight">نیمه‌شب</option><option value="forest">جنگلی</option><option value="ocean">اقیانوسی</option><option value="sunset">غروب</option></select>
+    </label>
     <label class="setting-row sort-setting" for="sort-mode">مرتب‌سازی کارها
       <select id="sort-mode"><option value="time">بر اساس زمان</option><option value="category">بر اساس دسته‌بندی</option><option value="priority">بر اساس اولویت</option></select>
     </label>

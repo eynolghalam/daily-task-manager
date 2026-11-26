@@ -22,7 +22,7 @@ const CATEGORIES_KEY = "daily-task-manager-categories";
 const SETTINGS_KEY = "daily-task-manager-settings";
 const DEFAULT_CATEGORIES = ["شخصی", "کار", "درس", "خانه"];
 let categories = loadCategories();
-let settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"persianCalendar":true}');
+let settings = { persianCalendar: true, sortMode: "time", fontSize: "medium", iconSize: "medium", theme: "midnight", ...loadSettings() };
 let calendarCursor = new Date();
 let editingTaskId = null;
 let activeDateInput = dateInput;
@@ -43,6 +43,17 @@ renderCategoryOptions();
 renderCategorySettings();
 document.querySelector("#app-version").textContent = `v${window.widgetControls.getVersion()}`;
 sortModeInput.value = settings.sortMode || "time";
+document.querySelector("#font-size-setting").value = settings.fontSize;
+document.querySelector("#icon-size-setting").value = settings.iconSize;
+document.querySelector("#theme-setting").value = settings.theme;
+applyAppearanceSettings();
+for (const [selector, key] of [["#font-size-setting", "fontSize"], ["#icon-size-setting", "iconSize"], ["#theme-setting", "theme"]]) {
+  document.querySelector(selector).addEventListener("change", (event) => {
+    settings[key] = event.target.value;
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    applyAppearanceSettings();
+  });
+}
 sortModeInput.addEventListener("change", () => {
   settings.sortMode = sortModeInput.value;
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
@@ -147,6 +158,21 @@ function loadCategories() {
     const saved = JSON.parse(localStorage.getItem(CATEGORIES_KEY) || "null");
     return Array.isArray(saved) ? [...new Set([...DEFAULT_CATEGORIES, ...saved])] : [...DEFAULT_CATEGORIES];
   } catch { return [...DEFAULT_CATEGORIES]; }
+}
+
+function loadSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}");
+    return saved && typeof saved === "object" ? saved : {};
+  } catch { return {}; }
+}
+
+function applyAppearanceSettings() {
+  const root = document.documentElement;
+  const scales = { xsmall: 0.80, small: 0.90, medium: 1, large: 1.12 };
+  root.style.setProperty("--font-scale", scales[settings.fontSize] || 1);
+  root.style.setProperty("--icon-scale", scales[settings.iconSize] || 1);
+  root.dataset.theme = ["midnight", "forest", "ocean", "sunset"].includes(settings.theme) ? settings.theme : "midnight";
 }
 
 function renderCategoryOptions() {
