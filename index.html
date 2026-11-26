@@ -9,7 +9,6 @@
 <body>
   <main class="app">
     <div class="window-tools">
-      <button id="check-updates" class="window-tool update-tool" type="button" title="بررسی به‌روزرسانی">⟳</button><span id="app-version" class="app-version"></span>
       <button id="open-settings" class="window-tool" type="button" title="تنظیمات">⚙</button>
       <button id="close-app" class="window-tool close-app" type="button" aria-label="خروج از برنامه" title="خروج از برنامه">×</button>
     </div>
@@ -26,8 +25,6 @@
       <div class="list-tools">
         <label class="filter-label" for="category-filter">دسته‌بندی</label>
         <select id="category-filter" class="category-filter"><option value="همه">همهٔ دسته‌ها</option></select>
-        <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
-        <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
       </div>
       <ul id="task-list" class="task-list"></ul>
       <p id="empty-message" class="empty-message">هنوز کاری نداری. با + اولین کار را بساز.</p>
@@ -51,6 +48,14 @@
       </form>
     </section>
     <footer>کارهای تو روی همین مرورگر ذخیره می‌شوند.</footer>
+    <section class="update-footer" aria-label="به‌روزرسانی برنامه">
+      <div class="update-footer-heading"><span>به‌روزرسانی برنامه</span><span id="app-version" class="app-version"></span></div>
+      <div class="update-footer-actions">
+        <button id="check-updates" class="update-button" type="button">بررسی به‌روزرسانی</button>
+        <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
+        <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
+      </div>
+    </section>
   </main>
   <dialog id="settings-dialog" class="app-dialog">
     <form method="dialog" class="dialog-heading"><h2>تنظیمات</h2><button class="dialog-close" aria-label="بستن">×</button></form>
