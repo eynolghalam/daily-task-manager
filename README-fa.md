@@ -73,3 +73,16 @@ Windows Calendar قدیمی دیگر پشتیبانی نمی‌شود. فایل 
 
 ## نسخهٔ 1.5.9
 - انتخاب مرتب‌سازی بر اساس زمان، اولویت یا دسته‌بندی مستقیماً از صفحهٔ فهرست کارها.
+
+## نسخهٔ 1.6.0 و Android
+
+پروژه اکنون با Capacitor نسخهٔ Android هم می‌سازد. برای اجرای محلی، Android Studio و Android SDK لازم است:
+
+```powershell
+npm.cmd install
+npm.cmd run build:web
+npx.cmd cap add android
+npm.cmd run build:android
+```
+
+در GitHub Actions، هنگام انتشار هر نسخهٔ `v*`، APK آزمایشی ساخته و به همان Release افزوده می‌شود. فایل `app-debug.apk` برای نصب و آزمایش روی گوشی است؛ برای انتشار در Google Play باید نسخهٔ امضاشدهٔ release با کلید انتشار ساخته شود.

@@ -53,6 +53,7 @@ button:disabled { cursor: wait; opacity: .55; }
 .update-tool:hover { transform: rotate(28deg); }
 .app-version { align-self: center; margin-inline-start: -3px; color: #a6afc7; font-size: .72rem; direction: ltr; }
 .close-app:hover { color: #fff; border-color: rgba(255,130,150,.45); background: rgba(255,130,150,.19); }
+html.android-app #close-app { display: none; }
 .hero { min-height: 112px; margin-bottom: 24px; -webkit-app-region: drag; -webkit-user-select: none; user-select: none; }
 .window-tools, .window-tools button, .app-dialog, .app-dialog button, input, select { -webkit-app-region: no-drag; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid rgba(131,241,208,.17); border-radius: 999px; background: rgba(131,241,208,.07); color: var(--mint); font-size: .78rem; font-weight: 600; }

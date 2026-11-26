@@ -35,3 +35,35 @@ jobs:
             dist/*.exe
             dist/*.blockmap
             dist/latest.yml
+
+  android:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - name: دریافت کد
+        uses: actions/checkout@v4
+      - name: نصب Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - name: نصب Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: نصب وابستگی‌ها
+        run: npm ci
+      - name: آماده‌سازی پروژهٔ Android
+        run: |
+          npm run build:web
+          npx cap add android
+          npm run build:android
+      - name: ساخت APK
+        run: cd android && ./gradlew assembleDebug
+      - name: افزودن APK به Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: android/app/build/outputs/apk/debug/app-debug.apk
+          fail_on_unmatched_files: true

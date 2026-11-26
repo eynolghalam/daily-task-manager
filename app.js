@@ -43,6 +43,7 @@ categoryFilter.addEventListener("change", renderTasks);
 renderCategoryOptions();
 renderCategorySettings();
 document.querySelector("#app-version").textContent = `v${window.widgetControls.getVersion()}`;
+if (window.isAndroidApp) document.querySelector(".update-footer").hidden = true;
 sortModeInput.value = settings.sortMode || "time";
 listSortMode.value = settings.sortMode || "time";
 document.querySelector("#font-size-setting").value = settings.fontSize;
