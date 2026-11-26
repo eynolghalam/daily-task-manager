@@ -9,8 +9,8 @@
 <body>
   <main class="app">
     <div class="window-tools">
-      <button id="open-settings" class="window-tool" type="button" title="تنظیمات">⚙</button>
-      <button id="close-app" class="window-tool close-app" type="button" aria-label="خروج از برنامه" title="خروج از برنامه">×</button>
+      <button id="open-settings" class="window-tool" type="button" title="تنظیمات"><span class="material-icon">settings</span></button>
+      <button id="close-app" class="window-tool close-app" type="button" aria-label="خروج از برنامه" title="خروج از برنامه"><span class="material-icon">close</span></button>
     </div>
     <header class="hero">
       <span class="eyebrow">یک قدم کوچک، هر روز</span>
@@ -28,11 +28,11 @@
       </div>
       <ul id="task-list" class="task-list"></ul>
       <p id="empty-message" class="empty-message">هنوز کاری نداری. با + اولین کار را بساز.</p>
-      <button id="new-task-fab" class="new-task-fab" type="button" aria-label="ساخت کار جدید" title="ساخت کار جدید">＋</button>
+      <button id="new-task-fab" class="new-task-fab" type="button" aria-label="ساخت کار جدید" title="ساخت کار جدید"><span class="material-icon">add</span></button>
     </section>
 
     <section id="create-view" class="panel create-view" aria-label="ساخت کار جدید" hidden>
-      <button id="back-to-list" class="back-button" type="button">→ <span>بازگشت به فهرست</span></button>
+      <button id="back-to-list" class="back-button" type="button"><span class="material-icon">arrow_forward</span><span>بازگشت به فهرست</span></button>
       <div class="create-heading"><span class="eyebrow">کار تازه</span><h2>چه کاری باید انجام شود؟</h2><p>جزئیات را وارد کن تا به فهرستت اضافه شود.</p></div>
       <form id="task-form" class="task-form">
         <label class="visually-hidden" for="task-input">کار جدید</label>
@@ -40,17 +40,17 @@
         <select id="task-category" aria-label="دسته‌بندی کار">
           <option value="شخصی">شخصی</option><option value="کار">کار</option><option value="درس">درس</option><option value="خانه">خانه</option>
         </select>
-        <button id="choose-date" class="date-picker-button icon-button" type="button" aria-label="انتخاب موعد" title="انتخاب موعد">▦</button>
+        <button id="choose-date" class="date-picker-button icon-button" type="button" aria-label="انتخاب موعد" title="انتخاب موعد"><span class="material-icon">calendar_month</span></button>
         <span id="new-task-date-label" class="new-task-date-label">بدون موعد</span>
         <input id="task-date" type="date" aria-label="موعد کار" hidden>
         <select id="task-priority" aria-label="اولویت کار"><option value="medium">اولویت عادی</option><option value="high">اولویت بالا</option><option value="low">اولویت کم</option></select>
-        <button type="submit">افزودن کار <span aria-hidden="true">＋</span></button>
+        <button type="submit">افزودن کار <span class="material-icon" aria-hidden="true">add</span></button>
       </form>
     </section>
     <footer>کارهای تو روی همین مرورگر ذخیره می‌شوند.</footer>
     <section class="update-footer" aria-label="به‌روزرسانی برنامه">
       <div class="update-footer-actions">
-        <button id="check-updates" class="update-button update-icon-button" type="button" title="بررسی به‌روزرسانی" aria-label="بررسی به‌روزرسانی">⟳</button>
+        <button id="check-updates" class="update-button update-icon-button" type="button" title="بررسی به‌روزرسانی" aria-label="بررسی به‌روزرسانی"><span class="material-icon">sync</span></button>
         <span id="app-version" class="app-version"></span>
         <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
         <button id="apply-update" class="update-button apply-update" type="button" title="راه‌اندازی دوباره و نصب به‌روزرسانی" hidden>نصب ⤻</button>
@@ -58,7 +58,7 @@
     </section>
   </main>
   <dialog id="settings-dialog" class="app-dialog">
-    <form method="dialog" class="dialog-heading"><h2>تنظیمات</h2><button class="dialog-close" aria-label="بستن">×</button></form>
+    <form method="dialog" class="dialog-heading"><h2>تنظیمات</h2><button class="dialog-close" aria-label="بستن"><span class="material-icon">close</span></button></form>
     <label class="setting-row"><input id="persian-calendar-setting" type="checkbox" checked> نمایش تاریخ موعدها به‌صورت شمسی</label>
     <label class="setting-row sort-setting" for="sort-mode">مرتب‌سازی کارها
       <select id="sort-mode"><option value="time">بر اساس زمان</option><option value="category">بر اساس دسته‌بندی</option><option value="priority">بر اساس اولویت</option></select>
@@ -69,12 +69,12 @@
   </dialog>
   <dialog id="edit-dialog" class="app-dialog">
     <form id="edit-task-form">
-      <div class="dialog-heading"><h2>ویرایش کار</h2><button id="close-edit" class="dialog-close" type="button" aria-label="بستن">×</button></div>
+      <div class="dialog-heading"><h2>ویرایش کار</h2><button id="close-edit" class="dialog-close" type="button" aria-label="بستن"><span class="material-icon">close</span></button></div>
       <input id="edit-task-input" class="dialog-input" type="text" maxlength="120" required aria-label="نام کار">
       <div class="edit-fields">
         <select id="edit-task-category" aria-label="دسته‌بندی"></select>
         <select id="edit-task-priority" aria-label="اولویت"><option value="medium">اولویت عادی</option><option value="high">اولویت بالا</option><option value="low">اولویت کم</option></select>
-        <button id="edit-choose-date" class="date-picker-button icon-button" type="button" aria-label="انتخاب موعد" title="انتخاب موعد">▦</button>
+        <button id="edit-choose-date" class="date-picker-button icon-button" type="button" aria-label="انتخاب موعد" title="انتخاب موعد"><span class="material-icon">calendar_month</span></button>
         <input id="edit-task-date" type="date" hidden>
         <button id="edit-clear-date" type="button" class="clear-date">پاک‌کردن موعد</button>
       </div>
@@ -82,8 +82,8 @@
     </form>
   </dialog>
   <dialog id="calendar-dialog" class="app-dialog calendar-dialog">
-    <div class="dialog-heading"><h2>انتخاب موعد</h2><button id="close-calendar" class="dialog-close" aria-label="بستن">×</button></div>
-    <div class="calendar-month"><button id="previous-month" type="button" aria-label="ماه قبل">›</button><strong id="calendar-month-label"></strong><button id="today-button" class="today-button" type="button">امروز</button><button id="next-month" type="button" aria-label="ماه بعد">‹</button></div>
+    <div class="dialog-heading"><h2>انتخاب موعد</h2><button id="close-calendar" class="dialog-close" aria-label="بستن"><span class="material-icon">close</span></button></div>
+    <div class="calendar-month"><button id="previous-month" type="button" aria-label="ماه قبل"><span class="material-icon">chevron_right</span></button><strong id="calendar-month-label"></strong><button id="today-button" class="today-button" type="button">امروز</button><button id="next-month" type="button" aria-label="ماه بعد"><span class="material-icon">chevron_left</span></button></div>
     <div class="calendar-grid" id="calendar-grid"></div>
     <button id="clear-date" class="clear-date" type="button">پاک کردن موعد</button>
   </dialog>

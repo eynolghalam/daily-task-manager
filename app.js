@@ -110,7 +110,7 @@ document.querySelector("#today-button").addEventListener("click", () => {
   const today = new Date();
   calendarCursor = today;
   activeDateInput.value = toIsoDate(today);
-  activeDateButton.textContent = "▦";
+  setMaterialIcon(activeDateButton, "calendar_month");
   activeDateButton.title = formatTaskDate(toIsoDate(today));
   if (activeDateInput === dateInput) newTaskDateLabel.textContent = `موعد: ${formatTaskDate(toIsoDate(today))}`;
   renderCalendar();
@@ -118,14 +118,14 @@ document.querySelector("#today-button").addEventListener("click", () => {
 });
 document.querySelector("#clear-date").addEventListener("click", () => {
   activeDateInput.value = "";
-  activeDateButton.textContent = "▦";
+  setMaterialIcon(activeDateButton, "calendar_month");
   activeDateButton.title = "انتخاب موعد";
   if (activeDateInput === dateInput) newTaskDateLabel.textContent = "بدون موعد";
   calendarDialog.close();
 });
 document.querySelector("#edit-clear-date").addEventListener("click", () => {
   editDate.value = "";
-  editDateButton.textContent = "▦";
+  setMaterialIcon(editDateButton, "calendar_month");
   editDateButton.title = "انتخاب موعد";
 });
 document.querySelector("#close-edit").addEventListener("click", () => editDialog.close());
@@ -170,7 +170,7 @@ function renderCategorySettings() {
     if (!DEFAULT_CATEGORIES.includes(name)) {
       const remove = document.createElement("button");
       remove.type = "button";
-      remove.textContent = "×";
+      setMaterialIcon(remove, "close");
       remove.setAttribute("aria-label", `حذف دستهٔ ${name}`);
       remove.addEventListener("click", () => {
         categories = categories.filter((category) => category !== name);
@@ -188,7 +188,7 @@ function renderCategorySettings() {
   const addChip = document.createElement("button");
   addChip.className = "category-add-chip";
   addChip.type = "button";
-  addChip.textContent = "＋ دلخواه";
+  addChip.append(makeMaterialIcon("add"), document.createTextNode(" دلخواه"));
   addChip.addEventListener("click", () => {
     const categoryForm = document.querySelector("#category-form");
     categoryForm.hidden = false;
@@ -241,7 +241,7 @@ form.addEventListener("submit", (event) => {
   saveTasks();
   renderTasks();
   form.reset();
-  chooseDateButton.textContent = "▦";
+  setMaterialIcon(chooseDateButton, "calendar_month");
   chooseDateButton.title = "انتخاب موعد";
   newTaskDateLabel.textContent = "بدون موعد";
   showListView();
@@ -318,7 +318,7 @@ function renderTasks() {
       const calendarButton = document.createElement("button");
       calendarButton.className = "calendar-button";
       calendarButton.type = "button";
-      calendarButton.textContent = "▦";
+      setMaterialIcon(calendarButton, "calendar_month");
       calendarButton.setAttribute("aria-label", "افزودن به تقویم");
       calendarButton.title = "افزودن به تقویم";
       calendarButton.addEventListener("click", async () => {
@@ -335,7 +335,7 @@ function renderTasks() {
     const editButton = document.createElement("button");
     editButton.className = "edit-button";
     editButton.type = "button";
-    editButton.textContent = "✎";
+    setMaterialIcon(editButton, "edit");
     editButton.title = "ویرایش کار";
     editButton.setAttribute("aria-label", `ویرایش ${task.text}`);
     editButton.addEventListener("click", () => openEditDialog(task));
@@ -343,7 +343,7 @@ function renderTasks() {
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-button";
     deleteButton.type = "button";
-    deleteButton.textContent = "🗑";
+    setMaterialIcon(deleteButton, "delete");
     deleteButton.title = "حذف کار";
     deleteButton.setAttribute("aria-label", `حذف ${task.text}`);
     deleteButton.addEventListener("click", () => {
@@ -364,13 +364,25 @@ function openEditDialog(task) {
   editCategory.value = task.category || "شخصی";
   editPriority.value = task.priority || "medium";
   editDate.value = task.date || "";
-  editDateButton.textContent = "▦";
+  setMaterialIcon(editDateButton, "calendar_month");
   editDateButton.title = task.date ? formatTaskDate(task.date) : "انتخاب موعد";
   editDialog.showModal();
 }
 
 function toPersianDigits(value) {
   return String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[digit]);
+}
+
+function makeMaterialIcon(name) {
+  const icon = document.createElement("span");
+  icon.className = "material-icon";
+  icon.textContent = name;
+  icon.setAttribute("aria-hidden", "true");
+  return icon;
+}
+
+function setMaterialIcon(button, name) {
+  button.replaceChildren(makeMaterialIcon(name));
 }
 
 function formatTaskDate(isoDate) {
@@ -422,7 +434,7 @@ function renderCalendar() {
     if (activeDateInput.value === isoDate) button.classList.add("selected");
     button.addEventListener("click", () => {
       activeDateInput.value = isoDate;
-      activeDateButton.textContent = "▦";
+      setMaterialIcon(activeDateButton, "calendar_month");
       activeDateButton.title = formatTaskDate(isoDate);
       if (activeDateInput === dateInput) newTaskDateLabel.textContent = `موعد: ${formatTaskDate(isoDate)}`;
       calendarDialog.close();
