@@ -30,6 +30,11 @@ let activeDateButton = chooseDateButton;
 const list = document.querySelector("#task-list");
 const count = document.querySelector("#task-count");
 const emptyMessage = document.querySelector("#empty-message");
+const listView = document.querySelector("#list-view");
+const createView = document.querySelector("#create-view");
+const pageTitle = document.querySelector("#page-title");
+const pageSubtitle = document.querySelector("#page-subtitle");
+const newTaskDateLabel = document.querySelector("#new-task-date-label");
 
 let tasks = loadTasks();
 renderTasks();
@@ -63,7 +68,26 @@ document.querySelector("#category-form").addEventListener("submit", (event) => {
   field.value = "";
   renderCategoryOptions();
   renderCategorySettings();
+  document.querySelector("#category-form").hidden = true;
 });
+
+document.querySelector("#new-task-fab").addEventListener("click", showCreateView);
+document.querySelector("#back-to-list").addEventListener("click", showListView);
+
+function showCreateView() {
+  listView.hidden = true;
+  createView.hidden = false;
+  pageTitle.textContent = "ساخت کار جدید";
+  pageSubtitle.textContent = "کار تازه‌ات را با جزئیات ثبت کن.";
+  input.focus();
+}
+
+function showListView() {
+  createView.hidden = true;
+  listView.hidden = false;
+  pageTitle.textContent = "فهرست کارها";
+  pageSubtitle.textContent = "کارهایت را مرتب کن و یکی‌یکی پیش ببر.";
+}
 
 chooseDateButton.addEventListener("click", () => {
   showCalendarFor(dateInput, chooseDateButton);
@@ -82,13 +106,20 @@ document.querySelector("#close-calendar").addEventListener("click", () => calend
 document.querySelector("#previous-month").addEventListener("click", () => moveCalendarMonth(-1));
 document.querySelector("#next-month").addEventListener("click", () => moveCalendarMonth(1));
 document.querySelector("#today-button").addEventListener("click", () => {
-  calendarCursor = new Date();
+  const today = new Date();
+  calendarCursor = today;
+  activeDateInput.value = toIsoDate(today);
+  activeDateButton.textContent = "▦";
+  activeDateButton.title = formatTaskDate(toIsoDate(today));
+  if (activeDateInput === dateInput) newTaskDateLabel.textContent = `موعد: ${formatTaskDate(toIsoDate(today))}`;
   renderCalendar();
+  calendarDialog.close();
 });
 document.querySelector("#clear-date").addEventListener("click", () => {
   activeDateInput.value = "";
   activeDateButton.textContent = "▦";
   activeDateButton.title = "انتخاب موعد";
+  if (activeDateInput === dateInput) newTaskDateLabel.textContent = "بدون موعد";
   calendarDialog.close();
 });
 document.querySelector("#edit-clear-date").addEventListener("click", () => {
@@ -153,6 +184,16 @@ function renderCategorySettings() {
     }
     categorySettingsList.append(chip);
   }
+  const addChip = document.createElement("button");
+  addChip.className = "category-add-chip";
+  addChip.type = "button";
+  addChip.textContent = "＋ افزودن دسته";
+  addChip.addEventListener("click", () => {
+    const categoryForm = document.querySelector("#category-form");
+    categoryForm.hidden = false;
+    document.querySelector("#new-category").focus();
+  });
+  categorySettingsList.append(addChip);
 }
 
 document.querySelector("#close-app").addEventListener("click", () => {
@@ -195,10 +236,15 @@ form.addEventListener("submit", (event) => {
   if (!text) return;
 
   tasks.push({ id: makeId(), text, done: false, category: categoryInput.value, date: dateInput.value, priority: document.querySelector("#task-priority").value });
+  categoryFilter.value = "همه";
   saveTasks();
   renderTasks();
   form.reset();
   chooseDateButton.textContent = "▦";
+  chooseDateButton.title = "انتخاب موعد";
+  newTaskDateLabel.textContent = "بدون موعد";
+  showListView();
+  renderTasks();
   input.focus();
 });
 
@@ -377,6 +423,7 @@ function renderCalendar() {
       activeDateInput.value = isoDate;
       activeDateButton.textContent = "▦";
       activeDateButton.title = formatTaskDate(isoDate);
+      if (activeDateInput === dateInput) newTaskDateLabel.textContent = `موعد: ${formatTaskDate(isoDate)}`;
       calendarDialog.close();
     });
     calendarGrid.append(button);

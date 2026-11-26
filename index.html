@@ -15,11 +15,28 @@
     </div>
     <header class="hero">
       <span class="eyebrow">یک قدم کوچک، هر روز</span>
-      <h1>کارهای امروزت</h1>
-      <p>کارهایت را بنویس و با خیال راحت یکی‌یکی انجامشان بده.</p>
+      <h1 id="page-title">فهرست کارها</h1>
+      <p id="page-subtitle">کارهایت را مرتب کن و یکی‌یکی پیش ببر.</p>
     </header>
 
-    <section class="panel" aria-label="فهرست کارها">
+    <section id="list-view" class="panel" aria-label="فهرست کارها">
+      <div class="list-heading list-page-heading">
+        <div><h2>کارهای من</h2><span id="task-count" class="count">۰ کار</span></div>
+      </div>
+      <div class="list-tools">
+        <label class="filter-label" for="category-filter">دسته‌بندی</label>
+        <select id="category-filter" class="category-filter"><option value="همه">همهٔ دسته‌ها</option></select>
+        <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
+        <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
+      </div>
+      <ul id="task-list" class="task-list"></ul>
+      <p id="empty-message" class="empty-message">هنوز کاری نداری. با + اولین کار را بساز.</p>
+      <button id="new-task-fab" class="new-task-fab" type="button" aria-label="ساخت کار جدید" title="ساخت کار جدید">＋</button>
+    </section>
+
+    <section id="create-view" class="panel create-view" aria-label="ساخت کار جدید" hidden>
+      <button id="back-to-list" class="back-button" type="button">→ <span>بازگشت به فهرست</span></button>
+      <div class="create-heading"><span class="eyebrow">کار تازه</span><h2>چه کاری باید انجام شود؟</h2><p>جزئیات را وارد کن تا به فهرستت اضافه شود.</p></div>
       <form id="task-form" class="task-form">
         <label class="visually-hidden" for="task-input">کار جدید</label>
         <input id="task-input" type="text" placeholder="مثلاً: خواندن یک فصل کتاب" maxlength="120" autocomplete="off" required>
@@ -27,22 +44,11 @@
           <option value="شخصی">شخصی</option><option value="کار">کار</option><option value="درس">درس</option><option value="خانه">خانه</option>
         </select>
         <button id="choose-date" class="date-picker-button icon-button" type="button" aria-label="انتخاب موعد" title="انتخاب موعد">▦</button>
+        <span id="new-task-date-label" class="new-task-date-label">بدون موعد</span>
         <input id="task-date" type="date" aria-label="موعد کار" hidden>
         <select id="task-priority" aria-label="اولویت کار"><option value="medium">اولویت عادی</option><option value="high">اولویت بالا</option><option value="low">اولویت کم</option></select>
         <button type="submit">افزودن کار <span aria-hidden="true">＋</span></button>
       </form>
-      <div class="list-heading">
-        <h2>فهرست کارها</h2>
-        <span id="task-count" class="count">۰ کار</span>
-      </div>
-      <div class="update-tools">
-        <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
-        <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
-      </div>
-      <label class="filter-label" for="category-filter">نمایش دسته:</label>
-      <select id="category-filter" class="category-filter"><option value="همه">همهٔ دسته‌ها</option><option>شخصی</option><option>کار</option><option>درس</option><option>خانه</option></select>
-      <ul id="task-list" class="task-list"></ul>
-      <p id="empty-message" class="empty-message">هنوز کاری اضافه نکرده‌ای. اولین کار را وارد کن!</p>
     </section>
     <footer>کارهای تو روی همین مرورگر ذخیره می‌شوند.</footer>
   </main>
@@ -54,7 +60,7 @@
     </label>
     <h3>دسته‌بندی‌ها</h3>
     <div id="category-settings-list" class="category-settings-list"></div>
-    <form id="category-form" class="category-form"><input id="new-category" type="text" maxlength="24" placeholder="نام دستهٔ جدید" required><button type="submit">＋ افزودن دسته</button></form>
+    <form id="category-form" class="category-form" hidden><input id="new-category" type="text" maxlength="24" placeholder="نام دستهٔ جدید" required><button type="submit">ذخیرهٔ دسته</button></form>
   </dialog>
   <dialog id="edit-dialog" class="app-dialog">
     <form id="edit-task-form">
