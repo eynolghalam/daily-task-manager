@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("node:path");
 const { autoUpdater } = require("electron-updater");
 
@@ -17,7 +17,8 @@ function createWidget() {
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: false,
-      sandbox: true
+      sandbox: true,
+      preload: path.join(__dirname, "preload.js")
     }
   });
 
@@ -25,6 +26,9 @@ function createWidget() {
 }
 
 app.whenReady().then(() => {
+  ipcMain.on("widget:close", (event) => {
+    BrowserWindow.fromWebContents(event.sender)?.close();
+  });
   createWidget();
   // Check GitHub Releases for a newer published version when installed.
   if (app.isPackaged) autoUpdater.checkForUpdatesAndNotify();

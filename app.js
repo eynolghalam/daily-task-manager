@@ -8,6 +8,10 @@ const emptyMessage = document.querySelector("#empty-message");
 let tasks = loadTasks();
 renderTasks();
 
+document.querySelector("#close-app").addEventListener("click", () => {
+  window.widgetControls.close();
+});
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const text = input.value.trim();
