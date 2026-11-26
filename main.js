@@ -28,6 +28,7 @@ function createWidget() {
 }
 
 app.whenReady().then(() => {
+  ipcMain.on("app:version", (event) => { event.returnValue = app.getVersion(); });
   ipcMain.handle("calendar:add", async (_event, task) => {
     if (!task?.text || !/^\d{4}-\d{2}-\d{2}$/.test(task.date || "")) {
       return { ok: false, message: "برای افزودن به تقویم، ابتدا برای کار موعد تعیین کن." };

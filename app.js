@@ -8,6 +8,14 @@ const chooseDateButton = document.querySelector("#choose-date");
 const settingsDialog = document.querySelector("#settings-dialog");
 const calendarDialog = document.querySelector("#calendar-dialog");
 const categorySettingsList = document.querySelector("#category-settings-list");
+const editDialog = document.querySelector("#edit-dialog");
+const editForm = document.querySelector("#edit-task-form");
+const editInput = document.querySelector("#edit-task-input");
+const editCategory = document.querySelector("#edit-task-category");
+const editPriority = document.querySelector("#edit-task-priority");
+const editDate = document.querySelector("#edit-task-date");
+const editDateButton = document.querySelector("#edit-choose-date");
+const sortModeInput = document.querySelector("#sort-mode");
 const calendarGrid = document.querySelector("#calendar-grid");
 const calendarLabel = document.querySelector("#calendar-month-label");
 const CATEGORIES_KEY = "daily-task-manager-categories";
@@ -16,6 +24,9 @@ const DEFAULT_CATEGORIES = ["شخصی", "کار", "درس", "خانه"];
 let categories = loadCategories();
 let settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"persianCalendar":true}');
 let calendarCursor = new Date();
+let editingTaskId = null;
+let activeDateInput = dateInput;
+let activeDateButton = chooseDateButton;
 const list = document.querySelector("#task-list");
 const count = document.querySelector("#task-count");
 const emptyMessage = document.querySelector("#empty-message");
@@ -25,6 +36,13 @@ renderTasks();
 categoryFilter.addEventListener("change", renderTasks);
 renderCategoryOptions();
 renderCategorySettings();
+document.querySelector("#app-version").textContent = `v${window.widgetControls.getVersion()}`;
+sortModeInput.value = settings.sortMode || "time";
+sortModeInput.addEventListener("change", () => {
+  settings.sortMode = sortModeInput.value;
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  renderTasks();
+});
 
 document.querySelector("#open-settings").addEventListener("click", () => settingsDialog.showModal());
 settingsDialog.querySelector(".dialog-close").addEventListener("click", () => settingsDialog.close());
@@ -48,18 +66,42 @@ document.querySelector("#category-form").addEventListener("submit", (event) => {
 });
 
 chooseDateButton.addEventListener("click", () => {
-  const value = dateInput.value ? new Date(`${dateInput.value}T12:00:00`) : new Date();
+  showCalendarFor(dateInput, chooseDateButton);
+});
+editDateButton.addEventListener("click", () => showCalendarFor(editDate, editDateButton));
+
+function showCalendarFor(inputField, triggerButton) {
+  activeDateInput = inputField;
+  activeDateButton = triggerButton;
+  const value = inputField.value ? new Date(`${inputField.value}T12:00:00`) : new Date();
   calendarCursor = value;
   renderCalendar();
   calendarDialog.showModal();
-});
+}
 document.querySelector("#close-calendar").addEventListener("click", () => calendarDialog.close());
 document.querySelector("#previous-month").addEventListener("click", () => moveCalendarMonth(-1));
 document.querySelector("#next-month").addEventListener("click", () => moveCalendarMonth(1));
 document.querySelector("#clear-date").addEventListener("click", () => {
-  dateInput.value = "";
-  chooseDateButton.textContent = "انتخاب موعد (شمسی)";
+  activeDateInput.value = "";
+  activeDateButton.textContent = "▦";
   calendarDialog.close();
+});
+document.querySelector("#edit-clear-date").addEventListener("click", () => {
+  editDate.value = "";
+  editDateButton.textContent = "▦";
+});
+document.querySelector("#close-edit").addEventListener("click", () => editDialog.close());
+editForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const task = tasks.find((item) => item.id === editingTaskId);
+  if (!task) return;
+  task.text = editInput.value.trim();
+  task.category = editCategory.value;
+  task.priority = editPriority.value;
+  task.date = editDate.value;
+  saveTasks();
+  renderTasks();
+  editDialog.close();
 });
 
 function loadCategories() {
@@ -73,6 +115,9 @@ function renderCategoryOptions() {
   const selected = categoryInput.value || categories[0];
   categoryInput.replaceChildren(...categories.map((name) => new Option(name, name)));
   categoryInput.value = categories.includes(selected) ? selected : categories[0];
+  const selectedEditCategory = editCategory.value;
+  editCategory.replaceChildren(...categories.map((name) => new Option(name, name)));
+  editCategory.value = categories.includes(selectedEditCategory) ? selectedEditCategory : categories[0];
   const currentFilter = categoryFilter.value || "همه";
   categoryFilter.replaceChildren(new Option("همهٔ دسته‌ها", "همه"), ...categories.map((name) => new Option(name, name)));
   categoryFilter.value = categories.includes(currentFilter) ? currentFilter : "همه";
@@ -143,11 +188,11 @@ form.addEventListener("submit", (event) => {
   const text = input.value.trim();
   if (!text) return;
 
-  tasks.push({ id: makeId(), text, done: false, category: categoryInput.value, date: dateInput.value });
+  tasks.push({ id: makeId(), text, done: false, category: categoryInput.value, date: dateInput.value, priority: document.querySelector("#task-priority").value });
   saveTasks();
   renderTasks();
   form.reset();
-  chooseDateButton.textContent = "انتخاب موعد (شمسی)";
+  chooseDateButton.textContent = "▦";
   input.focus();
 });
 
@@ -171,6 +216,12 @@ function makeId() {
 function renderTasks() {
   list.replaceChildren();
   const visibleTasks = tasks.filter((task) => categoryFilter.value === "همه" || (task.category || "شخصی") === categoryFilter.value);
+  const priorityRank = { high: 0, medium: 1, low: 2 };
+  visibleTasks.sort((left, right) => {
+    if (settings.sortMode === "category") return categories.indexOf(left.category || "شخصی") - categories.indexOf(right.category || "شخصی") || (left.date || "9999").localeCompare(right.date || "9999");
+    if (settings.sortMode === "priority") return (priorityRank[left.priority || "medium"] - priorityRank[right.priority || "medium"]) || (left.date || "9999").localeCompare(right.date || "9999");
+    return (left.date || "9999").localeCompare(right.date || "9999");
+  });
   emptyMessage.hidden = visibleTasks.length > 0;
 
   const remaining = tasks.filter((task) => !task.done).length;
@@ -203,6 +254,10 @@ function renderTasks() {
     category.className = "task-category";
     category.textContent = task.category || "شخصی";
     details.append(category);
+    const priority = document.createElement("span");
+    priority.className = `task-priority priority-${task.priority || "medium"}`;
+    priority.textContent = { high: "اولویت بالا", medium: "عادی", low: "اولویت کم" }[task.priority || "medium"];
+    details.append(priority);
     if (task.date) {
       const date = document.createElement("span");
       date.textContent = `موعد: ${formatTaskDate(task.date)}`;
@@ -210,7 +265,9 @@ function renderTasks() {
       const calendarButton = document.createElement("button");
       calendarButton.className = "calendar-button";
       calendarButton.type = "button";
-      calendarButton.textContent = "افزودن به تقویم";
+      calendarButton.textContent = "▦";
+      calendarButton.setAttribute("aria-label", "افزودن به تقویم");
+      calendarButton.title = "افزودن به تقویم";
       calendarButton.addEventListener("click", async () => {
         const result = await window.widgetControls.addToCalendar({ text: task.text, date: task.date, category: task.category });
         if (result.ok) updateStatus.textContent = "رویداد تقویم آماده و باز شد.";
@@ -220,10 +277,21 @@ function renderTasks() {
     }
     body.append(details);
 
+    const actions = document.createElement("div");
+    actions.className = "task-actions";
+    const editButton = document.createElement("button");
+    editButton.className = "edit-button";
+    editButton.type = "button";
+    editButton.textContent = "✎";
+    editButton.title = "ویرایش کار";
+    editButton.setAttribute("aria-label", `ویرایش ${task.text}`);
+    editButton.addEventListener("click", () => openEditDialog(task));
+
     const deleteButton = document.createElement("button");
     deleteButton.className = "delete-button";
     deleteButton.type = "button";
-    deleteButton.textContent = "حذف";
+    deleteButton.textContent = "🗑";
+    deleteButton.title = "حذف کار";
     deleteButton.setAttribute("aria-label", `حذف ${task.text}`);
     deleteButton.addEventListener("click", () => {
       tasks = tasks.filter((currentTask) => currentTask.id !== task.id);
@@ -231,9 +299,21 @@ function renderTasks() {
       renderTasks();
     });
 
-    item.append(checkbox, body, deleteButton);
+    actions.append(editButton, deleteButton);
+    item.append(checkbox, body, actions);
     list.append(item);
   }
+}
+
+function openEditDialog(task) {
+  editingTaskId = task.id;
+  editInput.value = task.text;
+  editCategory.value = task.category || "شخصی";
+  editPriority.value = task.priority || "medium";
+  editDate.value = task.date || "";
+  editDateButton.textContent = "▦";
+  editDateButton.title = task.date ? formatTaskDate(task.date) : "انتخاب موعد";
+  editDialog.showModal();
 }
 
 function toPersianDigits(value) {
@@ -286,10 +366,10 @@ function renderCalendar() {
     button.type = "button";
     button.textContent = toPersianDigits(persianParts(date).day);
     const isoDate = toIsoDate(date);
-    if (dateInput.value === isoDate) button.classList.add("selected");
+    if (activeDateInput.value === isoDate) button.classList.add("selected");
     button.addEventListener("click", () => {
-      dateInput.value = isoDate;
-      chooseDateButton.textContent = formatTaskDate(isoDate);
+      activeDateInput.value = isoDate;
+      activeDateButton.textContent = formatTaskDate(isoDate);
       calendarDialog.close();
     });
     calendarGrid.append(button);
