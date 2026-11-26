@@ -1,6 +1,6 @@
 {
   "name": "daily-task-manager",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "برنامهٔ مدیریت کارهای روزانه برای ویندوز",
   "main": "main.js",
   "scripts": {

@@ -19,6 +19,10 @@
       <form id="task-form" class="task-form">
         <label class="visually-hidden" for="task-input">کار جدید</label>
         <input id="task-input" type="text" placeholder="مثلاً: خواندن یک فصل کتاب" maxlength="120" autocomplete="off" required>
+        <select id="task-category" aria-label="دسته‌بندی کار">
+          <option value="شخصی">شخصی</option><option value="کار">کار</option><option value="درس">درس</option><option value="خانه">خانه</option>
+        </select>
+        <input id="task-date" type="date" aria-label="موعد کار" title="موعد کار (اختیاری)">
         <button type="submit">افزودن کار <span aria-hidden="true">＋</span></button>
       </form>
       <div class="list-heading">
@@ -30,6 +34,8 @@
         <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
         <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
       </div>
+      <label class="filter-label" for="category-filter">نمایش دسته:</label>
+      <select id="category-filter" class="category-filter"><option value="همه">همهٔ دسته‌ها</option><option>شخصی</option><option>کار</option><option>درس</option><option>خانه</option></select>
       <ul id="task-list" class="task-list"></ul>
       <p id="empty-message" class="empty-message">هنوز کاری اضافه نکرده‌ای. اولین کار را وارد کن!</p>
     </section>
