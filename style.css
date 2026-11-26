@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+
+:root { font-family: Vazirmatn, Tahoma, sans-serif; color: #253044; background: #f4f7f5; font-synthesis: none; }
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at top right, #e3f4ed 0, transparent 42%), #f4f7f5; }
+.app { width: min(680px, calc(100% - 32px)); margin: 0 auto; padding: 72px 0 40px; }
+.hero { margin-bottom: 28px; }
+.eyebrow { color: #37866d; font-size: .88rem; font-weight: 700; }
+h1 { margin: 8px 0; font-size: clamp(2rem, 7vw, 3rem); letter-spacing: -.04em; }
+.hero p { margin: 0; color: #687487; }
+.panel { padding: 24px; background: #fff; border: 1px solid #e7ece9; border-radius: 22px; box-shadow: 0 16px 45px #244b3810; }
+.task-form { display: flex; gap: 10px; }
+.task-form input { min-width: 0; flex: 1; padding: 14px 16px; border: 1px solid #dce4df; border-radius: 12px; font: inherit; outline: none; }
+.task-form input:focus { border-color: #48a17f; box-shadow: 0 0 0 3px #48a17f20; }
+button { border: 0; font: inherit; cursor: pointer; }
+.task-form button { padding: 0 18px; border-radius: 12px; color: #fff; background: #328267; font-weight: 700; white-space: nowrap; }
+.task-form button:hover { background: #286e57; }
+.list-heading { display: flex; align-items: center; justify-content: space-between; margin-top: 28px; }
+h2 { margin: 0; font-size: 1.1rem; }
+.count { color: #758174; font-size: .9rem; }
+.task-list { display: grid; gap: 9px; padding: 0; margin: 14px 0 0; list-style: none; }
+.task-item { display: flex; align-items: center; gap: 12px; padding: 13px 14px; background: #f8faf9; border: 1px solid #edf1ee; border-radius: 12px; }
+.task-item input { width: 19px; height: 19px; accent-color: #328267; cursor: pointer; }
+.task-text { flex: 1; overflow-wrap: anywhere; }
+.task-item.done .task-text { color: #929b96; text-decoration: line-through; }
+.delete-button { padding: 6px 9px; border-radius: 8px; color: #a74b4b; background: transparent; }
+.delete-button:hover { background: #fff0ef; }
+.empty-message { margin: 24px 0 8px; text-align: center; color: #89938d; font-size: .95rem; }
+footer { padding: 18px 4px; color: #89938d; text-align: center; font-size: .85rem; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+@media (max-width: 520px) { .app { padding-top: 42px; } .panel { padding: 18px; } .task-form { flex-direction: column; } .task-form button { min-height: 48px; } }

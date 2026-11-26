@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>مدیریت کارهای روزانه</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <span class="eyebrow">یک قدم کوچک، هر روز</span>
+      <h1>کارهای امروزت</h1>
+      <p>کارهایت را بنویس و با خیال راحت یکی‌یکی انجامشان بده.</p>
+    </header>
+
+    <section class="panel" aria-label="فهرست کارها">
+      <form id="task-form" class="task-form">
+        <label class="visually-hidden" for="task-input">کار جدید</label>
+        <input id="task-input" type="text" placeholder="مثلاً: خواندن یک فصل کتاب" maxlength="120" autocomplete="off" required>
+        <button type="submit">افزودن کار <span aria-hidden="true">＋</span></button>
+      </form>
+      <div class="list-heading">
+        <h2>فهرست کارها</h2>
+        <span id="task-count" class="count">۰ کار</span>
+      </div>
+      <ul id="task-list" class="task-list"></ul>
+      <p id="empty-message" class="empty-message">هنوز کاری اضافه نکرده‌ای. اولین کار را وارد کن!</p>
+    </section>
+    <footer>کارهای تو روی همین مرورگر ذخیره می‌شوند.</footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

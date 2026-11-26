@@ -1,0 +1,22 @@
+{
+  "name": "daily-task-manager",
+  "version": "1.0.0",
+  "description": "برنامهٔ مدیریت کارهای روزانه برای ویندوز",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:windows": "electron-builder --win",
+    "publish:windows": "electron-builder --win --publish always"
+  },
+  "devDependencies": {
+    "electron": "^39.2.0",
+    "electron-builder": "^26.0.12",
+    "electron-updater": "^6.6.2"
+  },
+  "build": {
+    "appId": "ir.codex.dailytaskmanager",
+    "productName": "مدیریت کارهای روزانه",
+    "win": { "target": "nsis" },
+    "publish": [{ "provider": "github", "owner": "eynolghalam", "repo": "daily-task-manager" }]
+  }
+}

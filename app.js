@@ -1,0 +1,83 @@
+const STORAGE_KEY = "daily-task-manager-tasks";
+const form = document.querySelector("#task-form");
+const input = document.querySelector("#task-input");
+const list = document.querySelector("#task-list");
+const count = document.querySelector("#task-count");
+const emptyMessage = document.querySelector("#empty-message");
+
+let tasks = loadTasks();
+renderTasks();
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+
+  tasks.push({ id: makeId(), text, done: false });
+  saveTasks();
+  renderTasks();
+  form.reset();
+  input.focus();
+});
+
+function loadTasks() {
+  try {
+    const savedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    return Array.isArray(savedTasks) ? savedTasks : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveTasks() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+}
+
+function makeId() {
+  return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function renderTasks() {
+  list.replaceChildren();
+  emptyMessage.hidden = tasks.length > 0;
+
+  const remaining = tasks.filter((task) => !task.done).length;
+  count.textContent = `${toPersianDigits(remaining)} کار باقی‌مانده`;
+
+  for (const task of tasks) {
+    const item = document.createElement("li");
+    item.className = `task-item${task.done ? " done" : ""}`;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = task.done;
+    checkbox.setAttribute("aria-label", `انجام شد: ${task.text}`);
+    checkbox.addEventListener("change", () => {
+      task.done = checkbox.checked;
+      saveTasks();
+      renderTasks();
+    });
+
+    const text = document.createElement("span");
+    text.className = "task-text";
+    text.textContent = task.text;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.className = "delete-button";
+    deleteButton.type = "button";
+    deleteButton.textContent = "حذف";
+    deleteButton.setAttribute("aria-label", `حذف ${task.text}`);
+    deleteButton.addEventListener("click", () => {
+      tasks = tasks.filter((currentTask) => currentTask.id !== task.id);
+      saveTasks();
+      renderTasks();
+    });
+
+    item.append(checkbox, text, deleteButton);
+    list.append(item);
+  }
+}
+
+function toPersianDigits(value) {
+  return String(value).replace(/\d/g, (digit) => "۰۱۲۳۴۵۶۷۸۹"[digit]);
+}
