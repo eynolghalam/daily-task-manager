@@ -8,7 +8,11 @@
 </head>
 <body>
   <main class="app">
-    <button id="close-app" class="close-app" type="button" aria-label="خروج از برنامه" title="خروج از برنامه">×</button>
+    <div class="window-tools">
+      <button id="check-updates" class="window-tool update-tool" type="button" title="بررسی به‌روزرسانی">⟳</button>
+      <button id="open-settings" class="window-tool" type="button" title="تنظیمات">⚙</button>
+      <button id="close-app" class="window-tool close-app" type="button" aria-label="خروج از برنامه" title="خروج از برنامه">×</button>
+    </div>
     <header class="hero">
       <span class="eyebrow">یک قدم کوچک، هر روز</span>
       <h1>کارهای امروزت</h1>
@@ -22,7 +26,8 @@
         <select id="task-category" aria-label="دسته‌بندی کار">
           <option value="شخصی">شخصی</option><option value="کار">کار</option><option value="درس">درس</option><option value="خانه">خانه</option>
         </select>
-        <input id="task-date" type="date" aria-label="موعد کار" title="موعد کار (اختیاری)">
+        <button id="choose-date" class="date-picker-button" type="button">انتخاب موعد (شمسی)</button>
+        <input id="task-date" type="date" aria-label="موعد کار" hidden>
         <button type="submit">افزودن کار <span aria-hidden="true">＋</span></button>
       </form>
       <div class="list-heading">
@@ -30,7 +35,6 @@
         <span id="task-count" class="count">۰ کار</span>
       </div>
       <div class="update-tools">
-        <button id="check-updates" class="update-button" type="button">بررسی به‌روزرسانی</button>
         <button id="apply-update" class="update-button apply-update" type="button" hidden>راه‌اندازی دوباره و نصب</button>
         <span id="update-status" class="update-status" role="status" aria-live="polite"></span>
       </div>
@@ -41,6 +45,19 @@
     </section>
     <footer>کارهای تو روی همین مرورگر ذخیره می‌شوند.</footer>
   </main>
+  <dialog id="settings-dialog" class="app-dialog">
+    <form method="dialog" class="dialog-heading"><h2>تنظیمات</h2><button class="dialog-close" aria-label="بستن">×</button></form>
+    <label class="setting-row"><input id="persian-calendar-setting" type="checkbox" checked> نمایش تاریخ موعدها به‌صورت شمسی</label>
+    <h3>دسته‌بندی‌ها</h3>
+    <form id="category-form" class="category-form"><input id="new-category" type="text" maxlength="24" placeholder="نام دستهٔ جدید" required><button type="submit">افزودن</button></form>
+    <div id="category-settings-list" class="category-settings-list"></div>
+  </dialog>
+  <dialog id="calendar-dialog" class="app-dialog calendar-dialog">
+    <div class="dialog-heading"><h2>انتخاب موعد</h2><button id="close-calendar" class="dialog-close" aria-label="بستن">×</button></div>
+    <div class="calendar-month"><button id="previous-month" type="button" aria-label="ماه قبل">›</button><strong id="calendar-month-label"></strong><button id="next-month" type="button" aria-label="ماه بعد">‹</button></div>
+    <div class="calendar-grid" id="calendar-grid"></div>
+    <button id="clear-date" class="clear-date" type="button">پاک کردن موعد</button>
+  </dialog>
   <script src="app.js"></script>
 </body>
 </html>
