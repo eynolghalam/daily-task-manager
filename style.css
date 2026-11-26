@@ -37,7 +37,7 @@ button:disabled { cursor: wait; opacity: .55; }
 .update-tool:hover { transform: rotate(28deg); }
 .app-version { align-self: center; margin-inline-start: -3px; color: #a6afc7; font-size: .72rem; direction: ltr; }
 .close-app:hover { color: #fff; border-color: rgba(255,130,150,.45); background: rgba(255,130,150,.19); }
-.hero { margin-bottom: 24px; -webkit-app-region: drag; }
+.hero { min-height: 112px; margin-bottom: 24px; -webkit-app-region: drag; -webkit-user-select: none; user-select: none; }
 .window-tools, .window-tools button, .app-dialog, .app-dialog button, input, select { -webkit-app-region: no-drag; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 6px 11px; border: 1px solid rgba(131,241,208,.17); border-radius: 999px; background: rgba(131,241,208,.07); color: var(--mint); font-size: .78rem; font-weight: 600; }
 .eyebrow::before { width: 6px; height: 6px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 12px var(--mint); content: ""; }
@@ -104,10 +104,12 @@ h2 { margin: 0; font-size: 1.08rem; font-weight: 700; }
 .task-item.done .task-text { color: #a4acc0; text-decoration: line-through; }
 .empty-message { margin: 22px 0 8px; color: #9da8bf; text-align: center; font-size: .88rem; }
 footer { padding: 14px 4px; color: #7e89a3; text-align: center; font-size: .78rem; }
-.update-footer { margin-top: 8px; padding: 12px 14px; border: 1px solid rgba(255,255,255,.09); border-radius: 16px; background: rgba(255,255,255,.035); }
-.update-footer-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; color: #aeb8cf; font-size: .78rem; }
-.update-footer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-.update-footer .update-status { flex-basis: 100%; }
+.update-footer { margin-top: 8px; padding: 7px 10px; border: 1px solid rgba(255,255,255,.09); border-radius: 14px; background: rgba(255,255,255,.035); }
+.update-footer-actions { display: flex; min-width: 0; align-items: center; gap: 8px; }
+.update-icon-button { display: grid; flex: 0 0 30px; width: 30px; height: 30px; padding: 0; place-items: center; border-radius: 9px; color: var(--mint); font-size: 1.1rem; }
+.update-footer .app-version { flex: 0 0 auto; margin: 0; }
+.update-footer .update-status { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.update-footer .apply-update { flex: 0 0 auto; padding: 6px 9px; font-size: .75rem; }
 .app-dialog { width: min(430px,calc(100% - 28px)); max-height: 86vh; padding: 22px; overflow-y: auto; border: 1px solid rgba(255,255,255,.17); border-radius: 22px; background: linear-gradient(145deg,rgba(33,39,64,.96),rgba(19,25,43,.97)); box-shadow: 0 30px 90px rgba(0,0,0,.52),inset 0 1px rgba(255,255,255,.12); color: #edf3ff; backdrop-filter: blur(28px); animation: dialog-in .24s ease both; }
 .app-dialog::backdrop { background: rgba(5,8,19,.62); backdrop-filter: blur(5px); }
 .dialog-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }

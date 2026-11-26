@@ -188,7 +188,7 @@ function renderCategorySettings() {
   const addChip = document.createElement("button");
   addChip.className = "category-add-chip";
   addChip.type = "button";
-  addChip.textContent = "＋ افزودن دسته";
+  addChip.textContent = "＋ دلخواه";
   addChip.addEventListener("click", () => {
     const categoryForm = document.querySelector("#category-form");
     categoryForm.hidden = false;
