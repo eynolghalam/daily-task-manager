@@ -75,16 +75,17 @@ document.querySelector("#new-task-fab").addEventListener("click", showCreateView
 document.querySelector("#back-to-list").addEventListener("click", showListView);
 
 function showCreateView() {
-  listView.hidden = true;
-  createView.hidden = false;
+  listView.setAttribute("hidden", "");
+  createView.removeAttribute("hidden");
   pageTitle.textContent = "ساخت کار جدید";
   pageSubtitle.textContent = "کار تازه‌ات را با جزئیات ثبت کن.";
+  createView.scrollIntoView({ block: "start", behavior: "smooth" });
   input.focus();
 }
 
 function showListView() {
-  createView.hidden = true;
-  listView.hidden = false;
+  createView.setAttribute("hidden", "");
+  listView.removeAttribute("hidden");
   pageTitle.textContent = "فهرست کارها";
   pageSubtitle.textContent = "کارهایت را مرتب کن و یکی‌یکی پیش ببر.";
 }

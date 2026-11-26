@@ -45,14 +45,14 @@ h1 { margin: 12px 0 5px; font-size: clamp(2rem,7vw,2.8rem); line-height: 1.25; f
 .hero p { margin: 0; color: var(--muted); font-size: .92rem; }
 .panel { position: relative; padding: 22px; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 24px; background: linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.045)); box-shadow: 0 26px 80px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.1); backdrop-filter: blur(24px) saturate(135%); }
 .panel::before { position: absolute; top: 0; right: 12%; left: 12%; height: 1px; background: linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent); content: ""; }
-.list-view { min-height: 390px; padding-bottom: 82px; }
+.list-view { min-height: 390px; padding-bottom: 108px; }
 .list-page-heading { margin-top: 0; }
 .list-page-heading > div { display: flex; align-items: center; gap: 10px; }
 .list-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 15px; }
 .list-tools .filter-label { margin: 0; }
 .list-tools .category-filter { margin: 0; }
 .list-tools .update-status { flex-basis: 100%; }
-.new-task-fab { position: absolute; bottom: 20px; left: 20px; display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; background: linear-gradient(135deg,#70e0c4,#a89bff); box-shadow: 0 12px 30px rgba(90,190,185,.28),inset 0 1px rgba(255,255,255,.65); color: #11212b; font-size: 2rem; line-height: 1; transition: transform .22s ease,box-shadow .22s ease; }
+.new-task-fab { position: absolute; z-index: 2; bottom: 22px; left: 20px; display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid rgba(255,255,255,.34); border-radius: 50%; background: linear-gradient(135deg,#70e0c4,#a89bff); box-shadow: 0 12px 30px rgba(90,190,185,.28),inset 0 1px rgba(255,255,255,.65); color: #11212b; font-size: 2rem; line-height: 1; transition: transform .22s ease,box-shadow .22s ease; }
 .new-task-fab:hover { transform: translateY(-4px) rotate(90deg); box-shadow: 0 16px 36px rgba(90,190,185,.38); }
 .back-button { margin-bottom: 20px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--glass); color: #c7bcff; }
 .back-button:hover { background: rgba(255,255,255,.13); }
