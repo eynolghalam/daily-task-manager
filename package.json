@@ -1,11 +1,11 @@
 {
   "name": "daily-task-manager",
-  "version": "1.5.2",
+  "version": "1.5.3",
   "description": "برنامهٔ مدیریت کارهای روزانه برای ویندوز",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build:windows": "electron-builder --win",
+    "build:windows": "electron-builder --win --publish never",
     "publish:windows": "electron-builder --win --publish always"
   },
   "devDependencies": {

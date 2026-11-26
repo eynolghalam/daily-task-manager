@@ -21,7 +21,17 @@ jobs:
           cache: npm
       - name: نصب وابستگی‌ها
         run: npm ci
-      - name: ساخت و انتشار نصب‌کننده
-        run: npm run publish:windows
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: ساخت نصب‌کننده
+        run: npm run build:windows
+      - name: انتشار نصب‌کننده و فایل‌های به‌روزرسانی
+        uses: softprops/action-gh-release@v2
+        with:
+          name: مدیریت کارهای روزانه ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          draft: false
+          make_latest: true
+          fail_on_unmatched_files: true
+          files: |
+            dist/*.exe
+            dist/*.blockmap
+            dist/latest.yml
