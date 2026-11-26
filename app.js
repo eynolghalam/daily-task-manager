@@ -4,6 +4,7 @@ const input = document.querySelector("#task-input");
 const categoryInput = document.querySelector("#task-category");
 const dateInput = document.querySelector("#task-date");
 const categoryFilter = document.querySelector("#category-filter");
+const listSortMode = document.querySelector("#list-sort-mode");
 const chooseDateButton = document.querySelector("#choose-date");
 const settingsDialog = document.querySelector("#settings-dialog");
 const calendarDialog = document.querySelector("#calendar-dialog");
@@ -43,6 +44,7 @@ renderCategoryOptions();
 renderCategorySettings();
 document.querySelector("#app-version").textContent = `v${window.widgetControls.getVersion()}`;
 sortModeInput.value = settings.sortMode || "time";
+listSortMode.value = settings.sortMode || "time";
 document.querySelector("#font-size-setting").value = settings.fontSize;
 document.querySelector("#icon-size-setting").value = settings.iconSize;
 document.querySelector("#theme-setting").value = settings.theme;
@@ -56,6 +58,13 @@ for (const [selector, key] of [["#font-size-setting", "fontSize"], ["#icon-size-
 }
 sortModeInput.addEventListener("change", () => {
   settings.sortMode = sortModeInput.value;
+  listSortMode.value = settings.sortMode;
+  localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+  renderTasks();
+});
+listSortMode.addEventListener("change", () => {
+  settings.sortMode = listSortMode.value;
+  sortModeInput.value = settings.sortMode;
   localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
   renderTasks();
 });
